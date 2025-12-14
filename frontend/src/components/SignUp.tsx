@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp({ onToggle }: { onToggle: () => void }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const { signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setSuccess(false);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       return;
     }
 
     setLoading(true);
 
     const { error } = await signUp(email, password);
-    
+
     if (error) {
       setError(error.message);
     } else {
       setSuccess(true);
     }
-    
+
     setLoading(false);
   };
 
@@ -44,7 +44,8 @@ export default function SignUp({ onToggle }: { onToggle: () => void }) {
         <div className="max-w-md w-full space-y-8">
           <div className="rounded-md bg-green-50 p-4">
             <p className="text-sm text-green-800">
-              Successfully signed up! Please check your email to confirm your account.
+              Successfully signed up! Please check your email to confirm your
+              account.
             </p>
           </div>
           <div className="text-center">
@@ -131,7 +132,7 @@ export default function SignUp({ onToggle }: { onToggle: () => void }) {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              {loading ? 'Creating account...' : 'Sign up'}
+              {loading ? "Creating account..." : "Sign up"}
             </button>
           </div>
         </form>

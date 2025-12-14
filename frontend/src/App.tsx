@@ -13,9 +13,7 @@ function MainApp() {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">
-            Marksheet → Insights Generator
-          </h1>
+          <h1 className="text-2xl font-bold">Marksheet → Insights Generator</h1>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">{user?.email}</span>
             <button

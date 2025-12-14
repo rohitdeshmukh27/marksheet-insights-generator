@@ -16,11 +16,13 @@ export default function UploadCard({ onResult }) {
     setError("");
     const form = new FormData();
     form.append("file", file);
-    
+
     try {
       // Get the current session token
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         setError("Please sign in to upload");
         setLoading(false);
@@ -28,9 +30,9 @@ export default function UploadCard({ onResult }) {
       }
 
       const res = await axios.post("http://localhost:5000/api/analyze", form, {
-        headers: { 
+        headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${session.access_token}`
+          Authorization: `Bearer ${session.access_token}`,
         },
       });
       onResult(res.data);
