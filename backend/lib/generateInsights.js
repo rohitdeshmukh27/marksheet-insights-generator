@@ -55,15 +55,99 @@ export async function generateInsights(stats) {
   };
 
   // Build concise structured prompt
-  const prompt = `Analyze student performance and return JSON with these keys:
-- summary: Brief class overview (2 sentences)
-- student_insights: Array of insights for each student (format: "StudentName: strength in Subject (score), needs improvement in Subject (score)")
-- class_recommendations: Array of 3 top recommendations for the class
+  const prompt = `You are an educational data analyst. Analyze the student performance data and return a comprehensive JSON report.
 
 Data:
 ${JSON.stringify(structuredData, null, 2)}
 
-Return valid JSON only.`;
+Generate a JSON response with the following structure:
+
+{
+  "class_overview": {
+    "total_students": number,
+    "overall_average": number,
+    "performance_distribution": {
+      "excellent": number,  // >90%
+      "good": number,       // 75-90%
+      "average": number,    // 60-75%
+      "needs_attention": number  // <60%
+    },
+    "summary": "2-3 sentence overview of class performance"
+  },
+  
+  "subject_analysis": [
+    {
+      "subject": "subject name",
+      "class_average": number,
+      "highest_score": number,
+      "lowest_score": number,
+      "difficulty_rating": "easy|moderate|challenging",
+      "trend": "strength|concern|neutral",
+      "insight": "Brief explanation of subject performance"
+    }
+  ],
+  
+  "top_performers": [
+    {
+      "name": "student name",
+      "overall_percentage": number,
+      "rank": number,
+      "strengths": ["subject1", "subject2"],
+      "achievement_note": "What makes them stand out"
+    }
+  ],
+  
+  "students_needing_support": [
+    {
+      "name": "student name",
+      "overall_percentage": number,
+      "critical_subjects": ["subjects below 60%"],
+      "intervention_priority": "high|medium",
+      "recommended_action": "Specific suggestion"
+    }
+  ],
+  
+  "individual_insights": [
+    {
+      "name": "student name",
+      "profile": "balanced|science-oriented|humanities-oriented|inconsistent",
+      "strength_subjects": ["subject: score"],
+      "improvement_areas": ["subject: score"],
+      "personalized_tip": "One actionable recommendation",
+      "growth_potential": "Prediction or encouragement based on pattern"
+    }
+  ],
+  
+  "subject_correlations": [
+    {
+      "observation": "Students strong in X tend to be strong/weak in Y",
+      "subjects": ["subject1", "subject2"],
+      "correlation_type": "positive|negative|neutral"
+    }
+  ],
+  
+  "class_recommendations": {
+    "immediate_actions": [
+      "Top 3 urgent interventions with specific steps"
+    ],
+    "teaching_strategies": [
+      "2-3 pedagogical suggestions based on data patterns"
+    ],
+    "parent_communication_tips": [
+      "2 key points to share with parents"
+    ]
+  },
+  
+  "hidden_insights": [
+    "Unexpected patterns, outliers, or non-obvious observations that a human might miss"
+  ],
+  
+  "motivational_highlights": [
+    "Positive stories: most improved, consistent performers, subject champions"
+  ]
+}
+
+Be specific with numbers, names, and actionable recommendations. Focus on insights that help teachers make decisions.`;
 
   // Get API key and model from environment
   const apiKey = process.env.GEMINI_API_KEY;
