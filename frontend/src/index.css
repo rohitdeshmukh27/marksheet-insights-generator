@@ -66,3 +66,69 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hide elements that shouldn't be printed */
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure proper page breaks */
+  .bg-gradient-to-r,
+  .bg-gradient-to-br,
+  .bg-white,
+  .rounded-lg {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Optimize colors for print */
+  * {
+    color: black !important;
+    background: white !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Keep essential borders and spacing */
+  .border,
+  .border-t-4 {
+    border: 1px solid #ccc !important;
+  }
+
+  /* Preserve essential spacing */
+  .space-y-6 > * + *,
+  .space-y-3 > * + *,
+  .space-y-2 > * + * {
+    margin-top: 1rem !important;
+  }
+
+  /* Ensure charts and graphs print well */
+  canvas {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Better font rendering for print */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold !important;
+    page-break-after: avoid;
+  }
+
+  /* Keep grid layouts readable */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 0.5rem !important;
+  }
+}
